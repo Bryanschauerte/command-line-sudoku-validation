@@ -1,10 +1,10 @@
-const chalk = require('chalk');
-const readline = require('readline');
-const index = require('./index.js');
-const solutions = require('./solutions');
+var chalk = require('chalk');
+var readline = require('readline');
+var index = require('./index.js');
+var solutions = require('./solutions');
 var storage = [];
 
-const rl = readline.createInterface({
+var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
@@ -16,13 +16,14 @@ rl.prompt();
 function createArrayOfNumbers(input){
     var toReturn = [];
     var input = input.toString();
-    for (var i = 0; i < input.length; i++){
+    for (var i = 0; i <= input.length; i++){
         if (typeof parseFloat(input[i]) === 'number'
                 && !isNaN(parseFloat(input[i]))){
 
             toReturn.push(parseFloat(input[i]));
         }
     }
+    toReturn = toReturn.slice(0, 81);
     return toReturn;
 };
 
@@ -47,7 +48,7 @@ function createDisplay(array, invalidIndexes=[]){
         returnArray[i].map(function(item, index){
             var itemToAdd = item;
             var isInvalid = false;
-            if(invalidIndexes.includes((i * 9)+ index)){
+            if(invalidIndexes.length > 0 && invalidIndexes.includes((i * 9)+ index)){
                 isInvalid = true;
             }
             if (index === 8){
@@ -78,25 +79,24 @@ function storeInput(cmd){
         storage = [];
     }
 
-   if (cmd.match(/Valid/g)){
-       storage = solutions.validSolution;
-       const arrayOfNumbers = createArrayOfNumbers(storage);
-       const testedReturn = index.testArray(arrayOfNumbers, true);
-       console.log(createDisplay(arrayOfNumbers, testedReturn.invalidIndexes));
-       console.log('\n', `Sudoku is correct-> ${testedReturn.arrayValid}`)
-       process.exit(0);
-  }
+    if (cmd.match(/Valid/g)){
+        storage = solutions.validSolution;
+        var arrayOfNumbers = createArrayOfNumbers(storage);
+        var testedReturn = index.testArray(arrayOfNumbers, true);
+        console.log(createDisplay(arrayOfNumbers, testedReturn.invalidIndexes));
+        console.log('\n', `Sudoku is correct-> ${testedReturn.arrayValid}`)
+        process.exit(0);
+   }
 
     if (cmd.match(/Invalid/g)){
         storage = solutions.inValidSolution;
-        const arrayOfNumbers = createArrayOfNumbers(storage);
-        const testedReturn = index.testArray(arrayOfNumbers, true);
+        var arrayOfNumbers = createArrayOfNumbers(storage);
+        var testedReturn = index.testArray(arrayOfNumbers, true);
         console.log(createDisplay(arrayOfNumbers, testedReturn.invalidIndexes));
         console.log('\n', `Sudoku is correct-> ${testedReturn.arrayValid}`)
         process.exit(0);
     }
     var array = createArrayOfNumbers(cmd);
-
     array.map(function(item, index){
         storage.push(item);
     });
@@ -112,25 +112,26 @@ console.log('\n',
 
 rl.on('line', function (cmd) {
     storeInput(cmd);
-    if (storage.length != 81){
+    if (storage.length <= 81){
+        //
         console.log('\n', chalk.blue.bold('You entered ', chalk.red.bold(storage.length) + ' of ' + '81 numbers' + '\n'));
         console.log(chalk.blue("Type "+ chalk.red.bold("'clear'")+" to start over, or continue to add values", '\n'));
+        console.log(chalk.yellow('So far your sudoku looks like this:\n'), createDisplay(createArrayOfNumbers(storage)) + '\n');
     }
-    if (storage.length === 0){
+    if (storage.length === 0 ){
         console.log(
             '\n',
             chalk.blue("You may add any number of integers (1-9) followed by an 'enter'"),
             '\n',
             chalk.green.bold("Once 81 characters are entered, the submitted sudoku will be validated."),
-            '\n')
-    } else if (storage.length === 81){
-        const arrayOfNumbers = createArrayOfNumbers(storage);
-        const testedReturn = index.testArray(arrayOfNumbers, true);
+            '\n');
+    }
+    if (storage.length >= 81){
+        var arrayOfNumbers = createArrayOfNumbers(storage);
+        var testedReturn = index.testArray(arrayOfNumbers, true);
         console.log(createDisplay(arrayOfNumbers, testedReturn.invalidIndexes));
         console.log('\n', `Sudoku is correct-> ${testedReturn.arrayValid}`)
         process.exit(0);
-    } else {
-            console.log(chalk.yellow('So far your sudoku looks like this:\n'), createDisplay(createArrayOfNumbers(storage)) + '\n');
     }
     rl.setPrompt(prefix, prefix.length);
     rl.prompt();

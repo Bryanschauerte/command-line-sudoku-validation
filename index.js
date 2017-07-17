@@ -4,12 +4,10 @@ module.exports = {
     inSameSonet,
     testArray,
     isValid,
-    getAllOccurancesOfNumberAsIndexes,
-    testArray
+    getAllOccurancesOfNumberAsIndexes
 };
 
 function inSameRow(indexInArray, nextOccurance){
-
     //checks all values that are in same row due to finding the division of
     //the index by the number of rows.
     //Floor gives us thirds being rounded giving us sections of 3
@@ -17,15 +15,12 @@ function inSameRow(indexInArray, nextOccurance){
 }
 
 function inSameColumn(indexInArray, nextOccurance){
-
     //checks all values that are in same column due to the modulo(remainder)
     //showing which column that index belongs to
-
     return (Math.floor(indexInArray % 9) === Math.floor(nextOccurance % 9));
 }
 
 function inSameSonet(indexInArray, nextOccurance){
-
     //intersection of top three rows && 3 columns are equal
     return (Math.floor(indexInArray/27) === Math.floor(nextOccurance/27)
         && Math.floor(nextOccurance%9/3) === Math.floor(indexInArray%9/3));
@@ -34,13 +29,14 @@ function inSameSonet(indexInArray, nextOccurance){
 
 function isValid(firstIndex, nextIndex){
 
-
     if (inSameRow(firstIndex, nextIndex)){
         return false;
     };
+
     if (inSameColumn(firstIndex, nextIndex)){
         return false;
     };
+
     if (inSameSonet(firstIndex, nextIndex)){
         return false;
     };
@@ -65,8 +61,8 @@ function testArray(array, returnInvalidIndexes=false){
     if (array.length !== 81){
         return false;
     }
-    for (var i = 0; i < 81; i++){
 
+    for (var i = 0; i < 81; i++){
         var targetvalue = array[i];
         var indexArray = getAllOccurancesOfNumberAsIndexes(array, targetvalue);
         indexArray.map((item, index) => {
@@ -76,14 +72,15 @@ function testArray(array, returnInvalidIndexes=false){
                     invalidIndexes.push(i);
                 }
             }
-        })
+        });
     }
+
     return returnInvalidIndexes ?
         {
             arrayValid,
             invalidIndexes
-          }
-          :arrayValid;
+        }
+          : arrayValid;
 }
 
 
