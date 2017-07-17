@@ -85,4 +85,6 @@ function testArray(array, returnInvalidIndexes=false){
 
 
 // called with testArray(stringOfSudoku);
-// will output a string of 'False' or 'True' to be sent to the process.stdout
+//   => Will return true or false
+// called with testArray(stringOfSudoku, true);
+//  => Will return true or false and array of invalid indexes
