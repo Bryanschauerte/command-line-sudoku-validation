@@ -1,0 +1,24 @@
+{
+  "name": "sodoku-solution-validator",
+  "version": "1.0.0",
+  "description": "A node program that checks the validility of a sodoku solution. Node/jest/chalk",
+  "main": "index.js",
+  "scripts": {
+    "start": "clear && node sudokuTerminal.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "sodoku",
+    "node",
+    "jest",
+    "chalk"
+  ],
+  "author": "Bryan Schauerte",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.0.1"
+  },
+  "devDependencies": {
+    "jest": "^20.0.4"
+  }
+}
