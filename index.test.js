@@ -40,10 +40,10 @@ describe('Helper functions', () => {
     });
     describe('testArray', function(){
         it("returns 'True' for a valid sudoku array", ()=>{
-            expect(index.testArray(solutions.validSolution)).toBe('True');
+            expect(index.testArray(solutions.validSolution)).toBe(true);
         });
         it("returns 'False' for an invalid sudoku array", ()=>{
-            expect(index.testArray(solutions.inValidSolution)).toBe('False');
+            expect(index.testArray(solutions.inValidSolution)).toBe(false);
         });
     });
 });
